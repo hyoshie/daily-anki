@@ -14,10 +14,10 @@ export default function Home() {
       <main>
         <Flex direction='column' align='center'>
           <Link href='/deck'>
-            <Button as='a'>Memorize Deck</Button>
+            <Button>Memorize Deck</Button>
           </Link>
           <Link href='/chat'>
-            <Button as='a'>Chat with AI</Button>
+            <Button>Chat with AI</Button>
           </Link>
         </Flex>
       </main>
