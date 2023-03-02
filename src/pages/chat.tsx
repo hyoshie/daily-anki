@@ -1,5 +1,12 @@
-const Chat = () => {
-  return <div>Chat</div>
-}
+import { Box } from '@chakra-ui/react';
+import { ChatAI } from '@/components/ChatAi';
 
-export default Chat
+const Chat = () => {
+  return (
+    <Box>
+      <ChatAI />
+    </Box>
+  );
+};
+
+export default Chat;

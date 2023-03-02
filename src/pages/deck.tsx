@@ -1,5 +1,5 @@
 const Deck = () => {
-  return <div>Deck</div>
-}
+  return <div>Deck</div>;
+};
 
-export default Deck
+export default Deck;
