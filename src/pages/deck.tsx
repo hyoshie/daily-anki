@@ -1,17 +1,10 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  Card,
-  CardBody,
-  Container,
-  Stack,
-  StackDivider,
-  Text,
-} from '@chakra-ui/react'
+import { Box, Container } from '@chakra-ui/react'
 import { useState } from 'react'
+import { FlashCard } from '@/features/deck/components/FlashCard'
+import { FlashCardActionButton } from '@/features/deck/components/FlashCardActionButton'
+import { type FlashCardData } from '@/features/deck/interfaces'
 
-const cards = [
+const cards: FlashCardData[] = [
   { question: 'What is the capital of Japan?', answer: 'Tokyo' },
   { question: 'What is the highest mountain in the world?', answer: 'Mount Everest' },
   { question: 'What is the largest planet in our solar system?', answer: 'Jupiter' },
@@ -37,36 +30,20 @@ function Deck() {
     setCurrentCardIndex(currentCardIndex + 1)
   }
 
-  const renderActionButtons = () => {
-    if (isAnswerShown) {
-      return (
-        <ButtonGroup>
-          <Button onClick={handleDifficulty}>Easy</Button>
-          <Button onClick={handleDifficulty}>Hard</Button>
-        </ButtonGroup>
-      )
-    } else {
-      return <Button onClick={handleShowAnswer}>Show Answer</Button>
-    }
-  }
-
   if (currentCardIndex >= cards.length) {
     return <div>Finished</div>
   }
 
   return (
     <Container maxW='xl' mt='16' centerContent>
-      <Card>
-        <CardBody>
-          <Stack divider={<StackDivider />}>
-            <Text fontSize='2xl'>{cards[currentCardIndex].question}</Text>
-            {isAnswerShown && <Text fontSize='lg'>{cards[currentCardIndex].answer}</Text>}
-          </Stack>
-        </CardBody>
-      </Card>
+      <FlashCard card={cards[currentCardIndex]} isAnswerShown={isAnswerShown} />
 
       <Box textAlign='center' justifyContent='center' position='fixed' bottom='20px'>
-        {renderActionButtons()}
+        <FlashCardActionButton
+          isAnswerShown={isAnswerShown}
+          handleShowAnswer={handleShowAnswer}
+          handleDifficulty={handleDifficulty}
+        />
       </Box>
     </Container>
   )
