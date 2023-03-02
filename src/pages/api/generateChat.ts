@@ -1,13 +1,13 @@
-import { type NextApiRequest, type NextApiResponse } from 'next'
-import { Configuration, OpenAIApi } from 'openai'
+import { type NextApiRequest, type NextApiResponse } from 'next';
+import { Configuration, OpenAIApi } from 'openai';
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
-})
+});
 
-const openai = new OpenAIApi(configuration)
+const openai = new OpenAIApi(configuration);
 
-const topic = '夏目漱石'
+const topic = '夏目漱石';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (configuration.apiKey === undefined) {
@@ -15,8 +15,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       error: {
         message: 'No API key',
       },
-    })
-    return
+    });
+    return;
   }
 
   try {
@@ -28,16 +28,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         The message includes short greeting, small talk about ${topic}, and encouraging the person タカシ is supporting.`,
       max_tokens: 1000,
       temperature: 1,
-    })
-    const result = completion.data.choices
-    console.log(result)
-    res.status(200).json({ result: completion.data.choices[0].text })
+    });
+    const rawMessage = completion.data.choices[0].text;
+
+    // 改行が入るので削除
+    // TODO: openAIのAPIで改行が入る理由要調査
+    const message = rawMessage?.replace(/\n/g, '').trim();
+    res.status(200).json({ message });
   } catch (error: Error | any) {
     if (error.response !== undefined) {
-      console.error(error.response.status, error.response.data)
-      res.status(error.response.status).json(error.response.data)
+      console.error(error.response.status, error.response.data);
+      res.status(error.response.status).json(error.response.data);
     } else {
-      res.status(500).json({ error: { message: error.message } })
+      res.status(500).json({ error: { message: error.message } });
     }
   }
 }
