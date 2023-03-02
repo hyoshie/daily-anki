@@ -14,6 +14,7 @@ export const ChatAI = () => {
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ chatType: 'begin' }),
       });
 
       const json = await response.json();
@@ -30,7 +31,7 @@ export const ChatAI = () => {
 
   return (
     <Box>
-      <Button onClick={handleClick}>Generate</Button>
+      <Button onClick={handleClick}>Begin</Button>
       <Box my={4}>
         <Flex>
           <Avatar src={imageUrl} />
