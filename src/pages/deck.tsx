@@ -1,23 +1,38 @@
+import fs from 'fs';
+import path from 'path';
 import { Box, Container } from '@chakra-ui/react';
+import { parse } from 'csv-parse/sync';
 import { useState } from 'react';
 import { FlashCard } from '@/features/deck/components/FlashCard';
 import { FlashCardActionButton } from '@/features/deck/components/FlashCardActionButton';
 import { type FlashCardData } from '@/features/deck/interfaces';
 
-const cards: FlashCardData[] = [
-  { question: 'What is the capital of Japan?', answer: 'Tokyo' },
-  { question: 'What is the highest mountain in the world?', answer: 'Mount Everest' },
-  { question: 'What is the largest planet in our solar system?', answer: 'Jupiter' },
-  { question: 'What is the largest country in the world?', answer: 'Russia' },
-  { question: 'What is the most populated country in the world?', answer: 'China' },
-  { question: 'What is the smallest country in the world?', answer: 'Vatican City' },
-  { question: 'What is the longest river in the world?', answer: 'Nile River' },
-  { question: 'What is the deepest ocean in the world?', answer: 'Pacific Ocean' },
-  { question: 'What is the hottest continent in the world?', answer: 'Africa' },
-  { question: 'What is the coldest continent in the world?', answer: 'Antarctica' },
-];
+export async function getStaticProps() {
+  const filePath = path.join(process.cwd(), 'data', 'sample.csv');
+  const data = fs.readFileSync(filePath, 'utf8');
 
-function Deck() {
+  const records = parse(data);
+  records.shift();
+
+  const cards = records.map((record: [string, string]) => {
+    return {
+      question: record[0],
+      answer: record[1],
+    };
+  });
+
+  return {
+    props: {
+      cards,
+    },
+  };
+}
+
+interface Props {
+  cards: FlashCardData[];
+}
+
+function Deck({ cards }: Props) {
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
