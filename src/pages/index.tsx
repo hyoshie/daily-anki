@@ -1,6 +1,6 @@
-import { Button, Flex } from '@chakra-ui/react'
-import Head from 'next/head'
-import Link from 'next/link'
+import { Button, Flex } from '@chakra-ui/react';
+import Head from 'next/head';
+import Link from 'next/link';
 
 export default function Home() {
   return (
@@ -22,5 +22,5 @@ export default function Home() {
         </Flex>
       </main>
     </>
-  )
+  );
 }
