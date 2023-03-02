@@ -4,33 +4,29 @@ import React, { useState } from 'react'
 export const ChatAI = () => {
   const [result, setResult] = useState<string>('')
 
-  const handleClick = () => {
-    // handleClickをasyncにするとeslintエラーが出るので下記のように実装
-    // 参考: https://stackoverflow.com/questions/63488141/promise-returned-in-function-argument-where-a-void-return-was-expected
-    void (async () => {
-      try {
-        const response = await fetch('/api/generateChat', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
+  const handleClick = async () => {
+    try {
+      const response = await fetch('/api/generateChat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
-        const json = await response.json()
+      const json = await response.json()
 
-        if (response.status !== 200) {
-          throw new Error(`Request failed with status ${response.status}`)
-        }
-
-        // 改行が入るので削除
-        // TODO: openAIのAPIで改行が入る理由要調査
-        const result = json.result.replace(/\n/g, '')
-
-        setResult(result)
-      } catch (error) {
-        console.error(error)
+      if (response.status !== 200) {
+        throw new Error(`Request failed with status ${response.status}`)
       }
-    })()
+
+      // 改行が入るので削除
+      // TODO: openAIのAPIで改行が入る理由要調査
+      const result = json.result.replace(/\n/g, '')
+
+      setResult(result)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
