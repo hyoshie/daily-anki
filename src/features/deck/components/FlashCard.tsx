@@ -1,5 +1,4 @@
 import { Card, CardBody, Stack, StackDivider, Text } from '@chakra-ui/react'
-import React from 'react'
 import { type FlashCardData } from '../interfaces'
 
 interface Props {
