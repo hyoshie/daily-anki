@@ -1,8 +1,8 @@
-import { Box, Container } from '@chakra-ui/react'
-import { useState } from 'react'
-import { FlashCard } from '@/features/deck/components/FlashCard'
-import { FlashCardActionButton } from '@/features/deck/components/FlashCardActionButton'
-import { type FlashCardData } from '@/features/deck/interfaces'
+import { Box, Container } from '@chakra-ui/react';
+import { useState } from 'react';
+import { FlashCard } from '@/features/deck/components/FlashCard';
+import { FlashCardActionButton } from '@/features/deck/components/FlashCardActionButton';
+import { type FlashCardData } from '@/features/deck/interfaces';
 
 const cards: FlashCardData[] = [
   { question: 'What is the capital of Japan?', answer: 'Tokyo' },
@@ -15,23 +15,23 @@ const cards: FlashCardData[] = [
   { question: 'What is the deepest ocean in the world?', answer: 'Pacific Ocean' },
   { question: 'What is the hottest continent in the world?', answer: 'Africa' },
   { question: 'What is the coldest continent in the world?', answer: 'Antarctica' },
-]
+];
 
 function Deck() {
-  const [isAnswerShown, setIsAnswerShown] = useState(false)
-  const [currentCardIndex, setCurrentCardIndex] = useState(0)
+  const [isAnswerShown, setIsAnswerShown] = useState(false);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   const handleShowAnswer = () => {
-    setIsAnswerShown(true)
-  }
+    setIsAnswerShown(true);
+  };
 
   const handleDifficulty = () => {
-    setIsAnswerShown(false)
-    setCurrentCardIndex(currentCardIndex + 1)
-  }
+    setIsAnswerShown(false);
+    setCurrentCardIndex(currentCardIndex + 1);
+  };
 
   if (currentCardIndex >= cards.length) {
-    return <div>Finished</div>
+    return <div>Finished</div>;
   }
 
   return (
@@ -46,7 +46,7 @@ function Deck() {
         />
       </Box>
     </Container>
-  )
+  );
 }
 
 export default Deck;
