@@ -1,9 +1,9 @@
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import { Button, ButtonGroup } from '@chakra-ui/react';
 
 interface Props {
-  isAnswerShown: boolean
-  handleShowAnswer: () => void
-  handleDifficulty: () => void
+  isAnswerShown: boolean;
+  handleShowAnswer: () => void;
+  handleDifficulty: () => void;
 }
 
 export const FlashCardActionButton = ({
@@ -18,5 +18,5 @@ export const FlashCardActionButton = ({
     </ButtonGroup>
   ) : (
     <Button onClick={handleShowAnswer}>Show Answer</Button>
-  )
-}
+  );
+};

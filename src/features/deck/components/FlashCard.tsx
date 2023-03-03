@@ -1,9 +1,9 @@
-import { Card, CardBody, Stack, StackDivider, Text } from '@chakra-ui/react'
-import { type FlashCardData } from '../interfaces'
+import { Card, CardBody, Stack, StackDivider, Text } from '@chakra-ui/react';
+import { type FlashCardData } from '../interfaces';
 
 interface Props {
-  card: FlashCardData
-  isAnswerShown: boolean
+  card: FlashCardData;
+  isAnswerShown: boolean;
 }
 
 export const FlashCard = ({ card, isAnswerShown }: Props) => {
@@ -16,5 +16,5 @@ export const FlashCard = ({ card, isAnswerShown }: Props) => {
         </Stack>
       </CardBody>
     </Card>
-  )
-}
+  );
+};
