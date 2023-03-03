@@ -1,24 +1,24 @@
 import { type NextApiRequest, type NextApiResponse } from 'next';
 import { Configuration, OpenAIApi } from 'openai';
+import { type ChatType } from '@/types/chatType';
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
 const openai = new OpenAIApi(configuration);
 
-const topic = '夏目漱石';
+const topics = ['夏目漱石', 'エベレスト', 'ハリー・ポッター'];
+const randomTopic = () => topics[Math.floor(Math.random() * topics.length)];
 const name = 'タカシ';
 const characteristic =
   'くだけた口調。敬語は使わない。語尾は「ござる」になることがある。ツンデレな仙人。一人称は「拙者」。面白い話をすることが好き。日本語で話す。話し相手のことはよく知っている。';
 
-type ChatType = 'begin' | 'middle' | 'end';
-
 const chatTypeToPrompt = (chatType: ChatType) => {
   switch (chatType) {
     case 'begin':
-      return `The message begins with a short greeting for someone who is about to study, and includes some small talk about ${topic}. It ends with words of encouragement.`;
+      return `The message begins with a short greeting for someone who is about to study, and includes some small talk about ${randomTopic()}. It ends with words of encouragement.`;
     case 'middle':
-      return `The message contains words of encouragement for someone who is working hard at their studies about ${topic}.`;
+      return `The message contains words of encouragement for someone who is working hard at their studies about ${randomTopic()}.`;
     case 'end':
       return 'The message for someone who has finished studying for today.';
   }

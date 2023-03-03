@@ -1,10 +1,11 @@
 import { Box, Button, Container, Flex } from '@chakra-ui/react';
 import Link from 'next/link';
-import { useState } from 'react';
-import { ChatAI } from '@/features/chat/components/ChatAi';
+import { useEffect, useState } from 'react';
+import { ChatMessage } from '@/features/chat/components/ChatMessage';
 import { FlashCard } from '@/features/deck/components/FlashCard';
 import { FlashCardActionButton } from '@/features/deck/components/FlashCardActionButton';
 import { type FlashCardData } from '@/features/deck/interfaces';
+import { fetchChatMessage } from '@/utils/fetchChatMessage';
 
 const cards: FlashCardData[] = [
   { question: 'What is the capital of Japan?', answer: 'Tokyo' },
@@ -22,6 +23,15 @@ const cards: FlashCardData[] = [
 function Deck() {
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [endMessage, setEndMessage] = useState('');
+
+  useEffect(() => {
+    const fetchFinishMessage = async () => {
+      const message = await fetchChatMessage('end');
+      setEndMessage(message);
+    };
+    void fetchFinishMessage();
+  }, []);
 
   const handleShowAnswer = () => {
     setIsAnswerShown(true);
@@ -35,7 +45,7 @@ function Deck() {
   if (currentCardIndex >= cards.length) {
     return (
       <Flex direction='column' align='center'>
-        <ChatAI chatType='end' />
+        <ChatMessage message={endMessage} />
         <Link href='/'>
           <Button>Finish</Button>
         </Link>

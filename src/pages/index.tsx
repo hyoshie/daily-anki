@@ -1,9 +1,21 @@
 import { Button, Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import Link from 'next/link';
-import { ChatAI } from '@/features/chat/components/ChatAi';
+import { useEffect, useState } from 'react';
+import { ChatMessage } from '@/features/chat/components/ChatMessage';
+import { fetchChatMessage } from '@/utils/fetchChatMessage';
 
 export default function Home() {
+  const [beginMessage, setBeginMessage] = useState('');
+
+  useEffect(() => {
+    const fetchBeginMessage = async () => {
+      const message = await fetchChatMessage('begin');
+      setBeginMessage(message);
+    };
+    void fetchBeginMessage();
+  }, []);
+
   return (
     <>
       <Head>
@@ -14,7 +26,7 @@ export default function Home() {
       </Head>
       <main>
         <Flex direction='column' align='center'>
-          <ChatAI chatType='begin' />
+          <ChatMessage message={beginMessage} />
           <Link href='/deck'>
             <Button>Start</Button>
           </Link>
