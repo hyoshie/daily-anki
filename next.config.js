@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  // 2回APIを叩くのを防ぐためにfalseにしました
+  reactStrictMode: false,
 };
 
 module.exports = nextConfig;

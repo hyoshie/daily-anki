@@ -1,6 +1,7 @@
 import { Button, Flex } from '@chakra-ui/react';
 import Head from 'next/head';
 import Link from 'next/link';
+import { ChatAI } from '@/features/chat/components/ChatAi';
 
 export default function Home() {
   return (
@@ -13,12 +14,13 @@ export default function Home() {
       </Head>
       <main>
         <Flex direction='column' align='center'>
+          <ChatAI chatType='begin' />
           <Link href='/deck'>
-            <Button>Memorize Deck</Button>
+            <Button>Start</Button>
           </Link>
-          <Link href='/chat'>
-            <Button>Chat with AI</Button>
-          </Link>
+          {/* <Link href='/chat'>
+            <Button>Start</Button>
+          </Link> */}
         </Flex>
       </main>
     </>

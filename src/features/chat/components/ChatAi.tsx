@@ -1,41 +1,48 @@
-import { Avatar, Box, Button, Flex, Text } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { Avatar, Box, Flex, Text } from '@chakra-ui/react';
+import React, { type FC, useEffect, useState } from 'react';
 
 const imageUrl =
   'https://1.bp.blogspot.com/-ZqRV1i42ELM/VJF_J7IvQjI/AAAAAAAApzk/GCpLXcqU6WE/s800/animalface_neko.png';
 
-export const ChatAI = () => {
+interface Props {
+  chatType: 'begin' | 'middle' | 'end';
+}
+
+export const ChatAI: FC<Props> = ({ chatType }: Props) => {
   const [message, setMessage] = useState<string>('');
 
-  const handleClick = async () => {
-    try {
-      const response = await fetch('/api/generateChat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ chatType: 'begin' }),
-      });
+  useEffect(() => {
+    const fetchChat = async () => {
+      try {
+        const response = await fetch('/api/generateChat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ chatType }),
+        });
 
-      const json = await response.json();
+        const json = await response.json();
 
-      if (response.status !== 200) {
-        throw new Error(`Request failed with status ${response.status}`);
+        if (response.status !== 200) {
+          throw new Error(`Request failed with status ${response.status}`);
+        }
+
+        setMessage(json.message);
+      } catch (error) {
+        console.error(error);
       }
+    };
 
-      setMessage(json.message);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+    void fetchChat();
+  }, []);
 
   return (
     <Box>
-      <Button onClick={handleClick}>Begin</Button>
       <Box my={4}>
         <Flex>
           <Avatar src={imageUrl} />
-          <Box bg='gray.100' p={4} borderRadius='md' boxShadow='md' whiteSpace='pre-wrap'>
+          <Box w='lg' bg='gray.100' p={4} borderRadius='md' boxShadow='md' whiteSpace='pre-wrap'>
             <Text>{message}</Text>
           </Box>
         </Flex>

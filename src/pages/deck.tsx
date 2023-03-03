@@ -1,8 +1,10 @@
-import { Box, Container } from '@chakra-ui/react'
-import { useState } from 'react'
-import { FlashCard } from '@/features/deck/components/FlashCard'
-import { FlashCardActionButton } from '@/features/deck/components/FlashCardActionButton'
-import { type FlashCardData } from '@/features/deck/interfaces'
+import { Box, Button, Container, Flex } from '@chakra-ui/react';
+import Link from 'next/link';
+import { useState } from 'react';
+import { ChatAI } from '@/features/chat/components/ChatAi';
+import { FlashCard } from '@/features/deck/components/FlashCard';
+import { FlashCardActionButton } from '@/features/deck/components/FlashCardActionButton';
+import { type FlashCardData } from '@/features/deck/interfaces';
 
 const cards: FlashCardData[] = [
   { question: 'What is the capital of Japan?', answer: 'Tokyo' },
@@ -15,23 +17,30 @@ const cards: FlashCardData[] = [
   { question: 'What is the deepest ocean in the world?', answer: 'Pacific Ocean' },
   { question: 'What is the hottest continent in the world?', answer: 'Africa' },
   { question: 'What is the coldest continent in the world?', answer: 'Antarctica' },
-]
+];
 
 function Deck() {
-  const [isAnswerShown, setIsAnswerShown] = useState(false)
-  const [currentCardIndex, setCurrentCardIndex] = useState(0)
+  const [isAnswerShown, setIsAnswerShown] = useState(false);
+  const [currentCardIndex, setCurrentCardIndex] = useState(0);
 
   const handleShowAnswer = () => {
-    setIsAnswerShown(true)
-  }
+    setIsAnswerShown(true);
+  };
 
   const handleDifficulty = () => {
-    setIsAnswerShown(false)
-    setCurrentCardIndex(currentCardIndex + 1)
-  }
+    setIsAnswerShown(false);
+    setCurrentCardIndex(currentCardIndex + 1);
+  };
 
   if (currentCardIndex >= cards.length) {
-    return <div>Finished</div>
+    return (
+      <Flex direction='column' align='center'>
+        <ChatAI chatType='end' />
+        <Link href='/'>
+          <Button>Finish</Button>
+        </Link>
+      </Flex>
+    );
   }
 
   return (
@@ -46,7 +55,7 @@ function Deck() {
         />
       </Box>
     </Container>
-  )
+  );
 }
 
 export default Deck;
