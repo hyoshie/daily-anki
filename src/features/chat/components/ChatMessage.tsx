@@ -10,15 +10,13 @@ interface Props {
 
 export const ChatMessage: FC<Props> = ({ message }: Props) => {
   return (
-    <Box>
-      <Box my={4}>
-        <Flex>
-          <Avatar src={imageUrl} />
-          <Box w='lg' bg='gray.100' p={4} borderRadius='md' boxShadow='md' whiteSpace='pre-wrap'>
-            <Text>{message}</Text>
-          </Box>
-        </Flex>
-      </Box>
+    <Box my={4}>
+      <Flex>
+        <Avatar src={imageUrl} />
+        <Box w='lg' bg='gray.100' p={4} borderRadius='md' boxShadow='md' whiteSpace='pre-wrap'>
+          <Text>{message}</Text>
+        </Box>
+      </Flex>
     </Box>
   );
 };
