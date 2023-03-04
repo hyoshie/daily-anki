@@ -1,11 +1,14 @@
 import fs from 'fs';
 import path from 'path';
-import { Box, Container } from '@chakra-ui/react';
+import { Box, Button, Container, Flex } from '@chakra-ui/react';
 import { parse } from 'csv-parse/sync';
-import { useState } from 'react';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { ChatMessage } from '@/features/chat/components/ChatMessage';
 import { FlashCard } from '@/features/deck/components/FlashCard';
 import { FlashCardActionButton } from '@/features/deck/components/FlashCardActionButton';
 import { type FlashCardData } from '@/features/deck/interfaces';
+import { fetchChatMessage } from '@/utils/fetchChatMessage';
 
 export async function getStaticProps() {
   const filePath = path.join(process.cwd(), 'data', 'sample.csv');
@@ -35,6 +38,15 @@ interface Props {
 function Deck({ cards }: Props) {
   const [isAnswerShown, setIsAnswerShown] = useState(false);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
+  const [endMessage, setEndMessage] = useState('');
+
+  useEffect(() => {
+    const fetchFinishMessage = async () => {
+      const message = await fetchChatMessage('end');
+      setEndMessage(message);
+    };
+    void fetchFinishMessage();
+  }, []);
 
   const handleShowAnswer = () => {
     setIsAnswerShown(true);
@@ -46,7 +58,14 @@ function Deck({ cards }: Props) {
   };
 
   if (currentCardIndex >= cards.length) {
-    return <div>Finished</div>;
+    return (
+      <Flex direction='column' align='center'>
+        <ChatMessage message={endMessage} />
+        <Link href='/'>
+          <Button>Finish</Button>
+        </Link>
+      </Flex>
+    );
   }
 
   return (
