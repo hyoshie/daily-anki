@@ -37,16 +37,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const chatPrompt = chatTypeToPrompt(chatType);
 
   try {
-    const completion = await openai.createCompletion({
-      model: 'text-davinci-003',
-      prompt: `Act as a chitchat AI named ${name}.
-        Follow ${name}'s characteristic described and write a message.
-        ${name}'s characteristic configuration: "${characteristic}"
-        ${chatPrompt}`,
-      max_tokens: 1000,
-      temperature: 1,
+    // OpenAIのAPIの使い方は以下を参考にした
+    // https://platform.openai.com/docs/api-reference/chat/create?lang=node.js
+    const completion = await openai.createChatCompletion({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'user',
+          content: `おはよう。今日も一緒に頑張ろうね。`,
+        },
+        {
+          role: 'system',
+          content: `Act as a chitchat AI named ${name}.
+          Follow ${name}'s characteristic described and write a message.
+          ${name}'s characteristic configuration: "${characteristic}"
+          ${chatPrompt}`,
+        },
+      ],
     });
-    const rawMessage = completion.data.choices[0].text;
+    const rawMessage = completion.data.choices[0].message?.content;
 
     // 改行が入るので削除
     // TODO: openAIのAPIで改行が入る理由要調査
