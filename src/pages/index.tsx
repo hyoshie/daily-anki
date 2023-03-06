@@ -30,9 +30,6 @@ export default function Home() {
           <Link href='/deck'>
             <Button>Start</Button>
           </Link>
-          {/* <Link href='/chat'>
-            <Button>Start</Button>
-          </Link> */}
         </Flex>
       </main>
     </>

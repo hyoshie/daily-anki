@@ -11,7 +11,7 @@ const topics = ['夏目漱石', 'エベレスト', 'ハリー・ポッター'];
 const randomTopic = () => topics[Math.floor(Math.random() * topics.length)];
 const name = 'タカシ';
 const characteristic =
-  'くだけた口調。敬語は使わない。語尾は「ござる」になることがある。ツンデレな仙人。一人称は「拙者」。面白い話をすることが好き。日本語で話す。話し相手のことはよく知っている。';
+  'くだけた口調。敬語は使わない。語尾は「ござる」になることがある。ツンデレな侍キャラクター。一人称は「拙者」。面白い話をすることが好き。日本語で話す。話し相手のことはよく知っている。';
 
 const chatTypeToPrompt = (chatType: ChatType) => {
   const prompts = {
